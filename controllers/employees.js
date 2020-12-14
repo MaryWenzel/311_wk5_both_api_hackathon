@@ -4,7 +4,7 @@ const { handleSQLError } = require('../mysql/error')
 
 
 const getEmployees = (req, res) => {
-    pool.query(`SELECT * FROM employees`,
+    pool.query(`SELECT * FROM employees LIMIT 50`,
         (err, rows) => {
             if (err) return handleSQLError(res, err)
             return res.json(rows);
