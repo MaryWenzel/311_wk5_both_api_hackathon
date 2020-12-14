@@ -41,3 +41,10 @@ module.exports = {
     getEmployeesById,
     getEmployeesByFirstName
 }
+
+// SELECT employees.*, departments.dept_name, dept_emp.emp_no, dept_emp.dept_no, salaries.salary FROM employees 
+// JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+// JOIN salaries ON salaries.emp_no = employees.emp_no
+// JOIN departments ON departments.dept_no = dept_emp.dept_no
+
+// WHERE salaries.to_date like "9999%" ORDER BY employees.emp_no 
