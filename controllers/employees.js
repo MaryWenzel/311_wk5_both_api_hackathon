@@ -12,7 +12,7 @@ const getEmployees = (req, res) => {
 }
 
 const getEmployeesById = (req, res) => {
-    let sql = `SELECT * FROM employees WHERE id = ${req.params.id}`
+    let sql = `SELECT * FROM employees WHERE emp_no = ${req.params.id}`
 
     sql = mysql.format(sql, [req.params.id])
 
@@ -23,9 +23,9 @@ const getEmployeesById = (req, res) => {
 }
 
 const getEmployeesByFirstName = (req, res) => {
-    let sql = `SELECT * FROM employees WHERE first_name = ${req.params.first_name}`
+    let sql = `SELECT * FROM employees WHERE first_name = "${req.params.first_name}"`
 
-    sql = mysql.format(sql, [req.params.id])
+    sql = mysql.format(sql, [req.params.first_name])
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
