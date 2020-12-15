@@ -33,13 +33,71 @@ const getEmployeesByFirstName = (req, res) => {
     })
 }
 
+const getEmployeeSalaries = (req, res) => {
+    pool.query(`SELECT employees.emp_no,
+                employees.first_name, 
+                employees.last_name, 
+                salaries.salary
+                FROM employees
+                JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+                JOIN salaries ON salaries.emp_no = employees.emp_no
+                WHERE salaries.to_date like "9999%" 
+                ORDER BY employees.emp_no
+                LIMIT 50`,
+        (err, rows) => {
+            if (err) return handleSQLError(res, err)
+            return res.json(rows);
 
+        })
+}
+
+const getEmployeeDepartments = (req, res) => {
+    pool.query(`SELECT employees.emp_no,
+                employees.first_name, 
+                employees.last_name, 
+                departments.dept_no,
+                departments.dept_name
+                FROM employees
+                JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+                JOIN departments ON departments.dept_no = dept_emp.dept_no
+                ORDER BY employees.emp_no
+                LIMIT 50`,
+        (err, rows) => {
+            if (err) return handleSQLError(res, err)
+            return res.json(rows);
+
+        })
+}
+
+const getEmployeeAll = (req, res) => {
+    pool.query(`SELECT employees.emp_no,
+                employees.first_name, 
+                employees.last_name, 
+                salaries.salary,
+                departments.dept_no,
+                departments.dept_name
+                FROM employees
+                JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+                JOIN salaries ON salaries.emp_no = employees.emp_no
+                JOIN departments ON departments.dept_no = dept_emp.dept_no
+                WHERE salaries.to_date like "9999%" 
+                ORDER BY employees.emp_no 
+                LIMIT 50`,
+        (err, rows) => {
+            if (err) return handleSQLError(res, err)
+            return res.json(rows);
+
+        })
+}
 
 
 module.exports = {
     getEmployees,
     getEmployeesById,
-    getEmployeesByFirstName
+    getEmployeesByFirstName,
+    getEmployeeSalaries,
+    getEmployeeDepartments,
+    getEmployeeAll
 }
 
 // SELECT employees.*, departments.dept_name, dept_emp.emp_no, dept_emp.dept_no, salaries.salary FROM employees 
